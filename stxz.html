@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>极地生态现状 - 南北极生态</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #f0f8ff; font-family: "SimSun", serif; }
+        .page-container { max-width: 1000px; margin: 0 auto; width: 100%; }
+        .top-bar { border: 1px solid #81d4fa; background-color: #e0f7fa; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; }
+        .top-bar-left { color: #01579b; font-size: 14px; display: flex; gap: 20px; }
+        .top-bar-right { color: #0288d1; font-weight: bold; font-size: 14px; }
+        .real-date { color: #0288d1; font-weight: bold; }
+        .nav-menu { width: 100%; border: 1px solid #81d4fa; border-top: none; background: linear-gradient(120deg, #e0f7fa, #f0f8ff); padding: 10px 0; }
+        .nav-list { display: flex; justify-content: flex-start; padding-left: 20px; gap: 40px; list-style: none; }
+        .nav-item a { text-decoration: none; color: #01579b; font-size: 15px; font-weight: 500; padding: 6px 16px; border-radius: 20px; transition: all 0.3s ease; display: inline-block; }
+        .nav-item a:hover { background: linear-gradient(135deg, #81d4fa, #0288d1); color: #fff; transform: scale(1.1); box-shadow: 0 3px 8px rgba(129, 212, 250, 0.6); }
+        .content-area { border: 1px solid #81d4fa; border-top: none; background: #fff; padding: 20px; min-height: 600px; }
+        /* 动画1：标题渐入+上移 */
+        .content-title { 
+            color: #01579b; font-size: 22px; font-weight: bold; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid #81d4fa;
+            opacity: 0; transform: translateY(30px); animation: titleFadeIn 1s ease forwards;
+        }
+        .ecology-section { margin-bottom: 30px; }
+        .section-title { color: #0288d1; font-size: 18px; margin: 15px 0; }
+        .section-content { color: #01579b; font-size: 14px; line-height: 1.8; margin-left: 10px; }
+        /* 动画2：列表项依次弹出 */
+        .data-list { list-style: disc; margin-left: 30px; margin-top: 10px; }
+        .data-list li { 
+            margin: 8px 0; opacity: 0; transform: translateX(-20px);
+            animation: listPopIn 0.5s ease forwards;
+        }
+        .data-list li:nth-child(1) { animation-delay: 0.2s; }
+        .data-list li:nth-child(2) { animation-delay: 0.4s; }
+        .data-list li:nth-child(3) { animation-delay: 0.6s; }
+        .data-list li:nth-child(4) { animation-delay: 0.8s; }
+        /* 动画关键帧 */
+        @keyframes titleFadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes listPopIn {
+            to { opacity: 1; transform: translateX(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <div class="top-bar">
+            <div class="top-bar-left">
+                今日 <span class="real-date" id="realDate">2025年12月09日 周二</span> - 江阳区 <span id="realTimeWeather">雾 9℃</span>
+            </div>
+            <div class="top-bar-right">南北极生态 · 极地生命图鉴</div>
+        </div>
+        <nav class="nav-menu">
+            <ul class="nav-list">
+                <li class="nav-item"><a href="aaa4.html" target="_blank">返回主页面</a></li>
+                <li class="nav-item"><a href="smtj.html" target="_blank">生命图鉴</a></li>
+                <li class="nav-item"><a href="zwjj.html" target="_blank">张政</a></li>
+                <li class="nav-item"><a href="kksj.html" target="_blank">科考数据</a></li>
+            </ul>
+        </nav>
+        <div class="content-area">
+            <h1 class="content-title">极地生态现状</h1>
+            <div class="ecology-section">
+                <h2 class="section-title">一、北极生态核心变化</h2>
+                <div class="section-content">
+                    北极作为全球气候变化的"放大器"，生态系统正经历前所未有的快速转变，核心表现为海冰缩减、栖息地退化和物种生存压力加剧：
+                    <ul class="data-list">
+                        <li>海冰面积40年间减少40%，夏季最小覆盖面积仅450万平方公里，创卫星观测以来最低纪录</li>
+                        <li>北极苔原植被退化明显，灌木覆盖率上升12%，改变了食草动物的觅食环境和栖息地结构</li>
+                        <li>海洋酸化速率达全球平均2倍，珊瑚、贝类等钙化生物的生存受到严重威胁</li>
+                        <li>北极航运活动50年间增长50%，噪音污染干扰了鲸鱼等海洋生物的导航与通讯能力</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="ecology-section">
+                <h2 class="section-title">二、南极生态关键危机</h2>
+                <div class="section-content">
+                    南极大陆虽远离人类活动中心，但仍难逃气候变化影响，冰架崩解和生态链破坏成为主要问题：
+                    <ul class="data-list">
+                        <li>冰架崩解频率创新高，2023年隆尼冰架崩解面积超1200平方公里，相当于170个西湖大小</li>
+                        <li>近10年冰盖物质损失达2800亿吨/年，海平面上升贡献量持续增加</li>
+                        <li>暖水入侵导致威德尔海豹繁殖地受损，幼崽存活率同比下降8%</li>
+                        <li>南极磷虾存活率下降15%，海水酸化直接影响幼体甲壳的正常形成，进而冲击整个南极食物链</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="ecology-section">
+                <h2 class="section-title">三、物种生存现状</h2>
+                <div class="section-content">
+                    极地特有物种对环境变化极为敏感，已出现明显的种群数量波动和行为改变：
+                    <ul class="data-list">
+                        <li>北极熊栖息地持续缩减，觅食难度增加，部分种群体重下降20%，生存周期缩短</li>
+                        <li>南极阿德利企鹅数量20年间减少20%，传统栖息地被融冰淹没，被迫向南极内陆迁移</li>
+                        <li>北极燕鸥为躲避无冰区，迁徙路线偏移2000km，飞行时间延长导致能量消耗大幅增加</li>
+                        <li>北极狐因啮齿类猎物减少30%，种群数量出现剧烈波动，部分区域已出现局部消失现象</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // 实时日期和天气功能（与主页面一致）
+        const weekDays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+        function formatRealDate() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const week = weekDays[now.getDay()];
+            return `${year}年${month}月${day}日 ${week}`;
+        }
+        document.getElementById('realDate').textContent = formatRealDate();
+        
+        const hourlyWeather = [
+            {hour:8, weather:"雾", temp:9},
+            {hour:9, weather:"多云", temp:9},
+            {hour:10, weather:"多云", temp:12},
+            {hour:11, weather:"阴", temp:14},
+            {hour:12, weather:"阴", temp:15},
+            {hour:13, weather:"阴", temp:15},
+            {hour:14, weather:"阴", temp:15},
+            {hour:15, weather:"阴", temp:16},
+            {hour:16, weather:"阴", temp:16},
+            {hour:17, weather:"阴", temp:16},
+            {hour:18, weather:"阴", temp:15},
+            {hour:19, weather:"阴", temp:15},
+            {hour:20, weather:"阴", temp:15},
+            {hour:21, weather:"阴", temp:14},
+            {hour:22, weather:"阴", temp:14},
+            {hour:23, weather:"阴", temp:14}
+        ];
+        function updateRealTimeWeather() {
+            const now = new Date();
+            const currentHour = now.getHours();
+            const currentWeather = hourlyWeather.find(item => item.hour === currentHour) || hourlyWeather.find(item => item.hour === 15);
+            document.getElementById('realTimeWeather').textContent = `${currentWeather.weather} ${currentWeather.temp}℃`;
+        }
+        updateRealTimeWeather();
+        setInterval(updateRealTimeWeather, 3600000);
+    </script>
+</body>
+</html>

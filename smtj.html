@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生命图鉴 - 南北极生态</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #f0f8ff; font-family: "SimSun", serif; }
+        .page-container { max-width: 1000px; margin: 0 auto; width: 100%; }
+        .top-bar { border: 1px solid #81d4fa; background-color: #e0f7fa; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; }
+        .top-bar-left { color: #01579b; font-size: 14px; display: flex; gap: 20px; }
+        .top-bar-right { color: #0288d1; font-weight: bold; font-size: 14px; }
+        .real-date { color: #0288d1; font-weight: bold; }
+        .nav-menu { width: 100%; border: 1px solid #81d4fa; border-top: none; background: linear-gradient(120deg, #e0f7fa, #f0f8ff); padding: 10px 0; }
+        .nav-list { display: flex; justify-content: flex-start; padding-left: 20px; gap: 40px; list-style: none; }
+        .nav-item a { text-decoration: none; color: #01579b; font-size: 15px; font-weight: 500; padding: 6px 16px; border-radius: 20px; transition: all 0.3s ease; display: inline-block; }
+        .nav-item a:hover { background: linear-gradient(135deg, #81d4fa, #0288d1); color: #fff; transform: scale(1.1); box-shadow: 0 3px 8px rgba(129, 212, 250, 0.6); }
+        .content-area { border: 1px solid #81d4fa; border-top: none; background: #fff; padding: 20px; min-height: 600px; }
+        .content-title { color: #01579b; font-size: 22px; font-weight: bold; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid #81d4fa; }
+        .atlas-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }
+        /* 动画1：卡片渐入+缩放 */
+        .species-card { 
+            border: 2px solid #81d4fa; border-radius: 8px; overflow: hidden; transition: all 0.3s ease;
+            opacity: 0; transform: scale(0.95); animation: cardFadeIn 0.8s ease forwards;
+        }
+        .species-card:nth-child(1) { animation-delay: 0.2s; }
+        .species-card:nth-child(2) { animation-delay: 0.4s; }
+        .species-card:nth-child(3) { animation-delay: 0.6s; }
+        .species-card:nth-child(4) { animation-delay: 0.8s; }
+        .species-card:nth-child(5) { animation-delay: 1s; }
+        .species-card:nth-child(6) { animation-delay: 1.2s; }
+        .species-card:hover { transform: scale(1.03); box-shadow: 0 5px 15px rgba(129, 212, 250, 0.4); }
+        /* 动画2：图片hover雪花飘落（伪元素） */
+        .species-img { 
+            width: 100%; height: 250px; object-fit: cover; position: relative; overflow: hidden;
+        }
+        .species-img::before {
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath fill='%23ffffff80' d='M5 0L6 4H10L7 6L8 10L5 8L2 10L3 6L0 4H4L5 0Z'/%3E%3C/svg%3E");
+            background-size: 20px; opacity: 0; transition: opacity 0.3s ease;
+            animation: snowFall 5s linear infinite;
+        }
+        .species-card:hover .species-img::before { opacity: 1; }
+        .species-info { padding: 15px; }
+        .species-name { color: #0288d1; font-size: 18px; font-weight: bold; margin-bottom: 10px; }
+        .species-desc { color: #01579b; font-size: 14px; line-height: 1.6; }
+        /* 动画关键帧 */
+        @keyframes cardFadeIn {
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes snowFall {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <div class="top-bar">
+            <div class="top-bar-left">
+                今日 <span class="real-date" id="realDate">2025年12月09日 周二</span> - 江阳区 <span id="realTimeWeather">雾 9℃</span>
+            </div>
+            <div class="top-bar-right">南北极生态 · 极地生命图鉴</div>
+        </div>
+        <nav class="nav-menu">
+            <ul class="nav-list">
+                <li class="nav-item"><a href="aaa4.html" target="_blank">返回主页面</a></li>
+                <li class="nav-item"><a href="smtj.html" target="_blank">生命图鉴</a></li>
+                <li class="nav-item"><a href="zwjj.html" target="_blank">张政</a></li>
+                <li class="nav-item"><a href="kksj.html" target="_blank">科考数据</a></li>
+            </ul>
+        </nav>
+        <div class="content-area">
+            <h1 class="content-title">极地生命图鉴</h1>
+            <div class="atlas-container">
+                <!-- 北极熊 -->
+                <div class="species-card">
+                    <img src="bjx.jpg" alt="北极 · 北极熊" class="species-img">
+                    <div class="species-info">
+                        <h2 class="species-name">北极熊（学名：Ursus maritimus）</h2>
+                        <p class="species-desc">北极顶级掠食者，成年雄性体重可达300-800公斤。全身覆盖厚密白毛（皮肤为黑色），适应零下40℃的极端低温。依赖海冰狩猎海豹，随着海冰缩减，觅食范围缩小，部分种群数量下降。擅长游泳，可在海中连续航行数十公里。</p>
+                    </div>
+                </div>
+                <!-- 帝企鹅 -->
+                <div class="species-card">
+                    <img src="dqe.jpg" alt="南极 · 帝企鹅" class="species-img">
+                    <div class="species-info">
+                        <h2 class="species-name">帝企鹅（学名：Aptenodytes forsteri）</h2>
+                        <p class="species-desc">企鹅中体型最大的物种，身高可达1.2米。繁殖期极具韧性，雄性负责孵化蛋，在零下60℃的暴风雪中坚守数月不进食。主要以磷虾、小鱼为食，栖息于南极大陆边缘的海冰区，冰架崩解对其繁殖地造成严重威胁。</p>
+                    </div>
+                </div>
+                <!-- 北极狐 -->
+                <div class="species-card">
+                    <img src="bjh.jpg" alt="北极 · 北极狐" class="species-img">
+                    <div class="species-info">
+                        <h2 class="species-name">北极狐（学名：Vulpes lagopus）</h2>
+                        <p class="species-desc">体型小巧的极地犬科动物，冬季毛色纯白，夏季变为灰褐色。嗅觉灵敏，主要捕食旅鼠、鸟类和鸟蛋，也会 scavenge 腐肉。适应能力强，但受啮齿类猎物数量波动影响大，近年因栖息地退化和猎物减少，种群数量不稳定。</p>
+                    </div>
+                </div>
+                <!-- 南极磷虾 -->
+                <div class="species-card">
+                    <img src="lx.jpg" alt="南极 · 磷虾群" class="species-img">
+                    <div class="species-info">
+                        <h2 class="species-name">南极磷虾（学名：Euphausia superba）</h2>
+                        <p class="species-desc">南极生态系统的核心物种，体长约6厘米，寿命5-7年。以浮游植物为食，集群生活，单个虾群密度可达每立方米10000只以上。是企鹅、海豹、鲸鱼的主要食物来源，总生物量估计达5亿吨，其生存状况直接影响整个南极食物链。</p>
+                    </div>
+                </div>
+                <!-- 竖琴海豹 -->
+                <div class="species-card">
+                    <img src="sqhb.jpg" alt="北极 · 竖琴海豹" class="species-img">
+                    <div class="species-info">
+                        <h2 class="species-name">竖琴海豹（学名：Pagophilus groenlandicus）</h2>
+                        <p class="species-desc">北极海域常见海豹物种，因背部黑色斑纹形似竖琴得名。幼崽全身覆盖白色绒毛，极具辨识度。依赖海冰繁殖和换毛，对海冰稳定性要求高。主要以鱼类和甲壳类为食，是北极熊的主要猎物之一，种群数量受气候变化和人类活动双重影响。</p>
+                    </div>
+                </div>
+                <!-- 雪鸮 -->
+                <div class="species-card">
+                    <img src="xuexiao.jpg" alt="北极 · 雪鸮" class="species-img">
+                    <div class="species-info">
+                        <h2 class="species-name">雪鸮（学名：Bubo scandiacus）</h2>
+                        <p class="species-desc">大型猫头鹰，通体雪白，带有暗色斑点（雄性斑点更少）。主要栖息于北极苔原，昼行性鸟类，与其他猫头鹰不同。以旅鼠、田鼠等啮齿类为食，猎物数量波动会导致其迁徙范围变化。视觉和听觉极为敏锐，捕猎时采取静候突袭策略。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // 实时日期和天气功能（与主页面一致）
+        const weekDays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+        function formatRealDate() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const week = weekDays[now.getDay()];
+            return `${year}年${month}月${day}日 ${week}`;
+        }
+        document.getElementById('realDate').textContent = formatRealDate();
+        
+        const hourlyWeather = [
+            {hour:8, weather:"雾", temp:9},
+            {hour:9, weather:"多云", temp:9},
+            {hour:10, weather:"多云", temp:12},
+            {hour:11, weather:"阴", temp:14},
+            {hour:12, weather:"阴", temp:15},
+            {hour:13, weather:"阴", temp:15},
+            {hour:14, weather:"阴", temp:15},
+            {hour:15, weather:"阴", temp:16},
+            {hour:16, weather:"阴", temp:16},
+            {hour:17, weather:"阴", temp:16},
+            {hour:18, weather:"阴", temp:15},
+            {hour:19, weather:"阴", temp:15},
+            {hour:20, weather:"阴", temp:15},
+            {hour:21, weather:"阴", temp:14},
+            {hour:22, weather:"阴", temp:14},
+            {hour:23, weather:"阴", temp:14}
+        ];
+        function updateRealTimeWeather() {
+            const now = new Date();
+            const currentHour = now.getHours();
+            const currentWeather = hourlyWeather.find(item => item.hour === currentHour) || hourlyWeather.find(item => item.hour === 15);
+            document.getElementById('realTimeWeather').textContent = `${currentWeather.weather} ${currentWeather.temp}℃`;
+        }
+        updateRealTimeWeather();
+        setInterval(updateRealTimeWeather, 3600000);
+    </script>
+</body>
+</html>

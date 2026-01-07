@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>南北极生态 - 丰富文字版</title>
+    <style>
+        /* 全局样式：重置默认边距，移除留白 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #f0f8ff;
+            padding: 0;
+            font-family: "SimSun", serif;
+        }
+        /* 网页容器，控制宽度+居中 */
+        .page-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 0 5px; /* 小屏幕左右留白 */
+        }
+        /* 顶部信息栏 */
+        .top-bar {
+            border: 1px solid #81d4fa;
+            background-color: #e0f7fa;
+            padding: 8px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap; /* 小屏幕换行 */
+            gap: 8px;
+        }
+        .top-bar-left {
+            color: #01579b;
+            font-size: 14px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .top-bar-right {
+            color: #0288d1;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        /* 实时日期样式（蓝色） */
+        .real-date {
+            color: #0288d1;
+            font-weight: bold;
+        }
+        /* 轮播区（上下滚动，图片铺满横幅） */
+        .carousel-area {
+            border: 1px solid #81d4fa;
+            border-top: none;
+            background-color: #f0f8ff;
+            height: 200px; /* 小屏幕缩小轮播高度 */
+            position: relative;
+            overflow: hidden;
+        }
+        @media (min-width: 768px) {
+            .carousel-area {
+                height: 300px; /* 大屏恢复原高度 */
+            }
+        }
+        .carousel-content {
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.5s ease;
+            height: 100%;
+        }
+        .carousel-item {
+            min-height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0; /* 移除内边距，让图片铺满 */
+        }
+        /* 轮播图片：铺满横幅（宽度100%，高度自适应） */
+        .custom-img-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .custom-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 铺满容器，裁剪多余部分（保持比例） */
+            border-radius: 0; /* 移除圆角，全屏贴合 */
+            border: none; /* 移除边框，干净铺满 */
+        }
+        .carousel-label {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(129, 212, 250, 0.8); /* 半透明背景，不遮挡图片 */
+            color: #01579b;
+            padding: 3px 12px;
+            border-radius: 12px;
+            font-size: 12px; /* 小屏幕缩小字体 */
+            z-index: 10;
+        }
+        @media (min-width: 768px) {
+            .carousel-label {
+                bottom: 20px;
+                font-size: 14px; /* 大屏恢复字体 */
+            }
+        }
+        /* 新增导航菜单 - 极地主题+双动画 */
+        .nav-menu {
+            width: 100%;
+            border: 1px solid #81d4fa;
+            border-top: none;
+            background: linear-gradient(120deg, #e0f7fa, #f0f8ff);
+            padding: 8px 0;
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: navSlideIn 1s ease forwards;
+            animation-delay: 0.6s;
+            overflow-x: auto; /* 小屏幕横向滚动 */
+        }
+        .nav-list {
+            display: flex;
+            justify-content: flex-start; /* 左对齐 */
+            padding: 0 10px; /* 左右留白 */
+            gap: 20px; /* 小屏幕缩小间距 */
+            list-style: none;
+            white-space: nowrap; /* 防止菜单项换行 */
+        }
+        @media (min-width: 768px) {
+            .nav-list {
+                padding-left: 20px;
+                gap: 40px; /* 大屏恢复间距 */
+            }
+        }
+        .nav-item a {
+            text-decoration: none;
+            color: #01579b;
+            font-size: 14px; /* 小屏幕缩小字体 */
+            font-weight: 500;
+            padding: 4px 12px; /* 小屏幕缩小内边距 */
+            border-radius: 20px;
+            transition: all 0.3s ease; /* 动画过渡基础 */
+            display: inline-block;
+        }
+        @media (min-width: 768px) {
+            .nav-item a {
+                font-size: 15px;
+                padding: 6px 16px;
+            }
+        }
+        /* 动画1：hover渐变+缩放 */
+        .nav-item a:hover {
+            background: linear-gradient(135deg, #81d4fa, #0288d1);
+            color: #fff;
+            transform: scale(1.1); /* 缩放效果 */
+            box-shadow: 0 3px 8px rgba(129, 212, 250, 0.6);
+        }
+        /* 动画2：加载滑入+渐显 */
+        @keyframes navSlideIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        /* 百度搜索区域样式：包含左右滑动字幕 */
+        .search-area {
+            width: 100%;
+            border: 1px solid #81d4fa;
+            border-top: none; /* 与上方视频区边框无缝衔接 */
+            border-bottom: none; /* 底部无边框 */
+            background-color: #fff;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: center; /* 搜索框水平居中 */
+            align-items: center;
+            margin-top: 0; /* 与视频区无留白 */
+            gap: 15px; /* 字幕与搜索框间距 */
+        }
+        /* 滑动字幕容器：垂直滚动，隐藏溢出 */
+        .scroll-text-container {
+            width: 120px; /* 字幕宽度，小屏幕自适应 */
+            height: 38px; /* 与搜索框同高 */
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        @media (max-width: 576px) {
+            .scroll-text-container {
+                width: 80px; /* 小屏幕缩小字幕宽度 */
+            }
+        }
+        /* 滑动字幕内容：垂直动画 */
+        .scroll-text {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            color: #01579b;
+            font-size: 13px;
+            font-weight: 500;
+            line-height: 1.8;
+            animation: scrollVertical 8s linear infinite;
+        }
+        /* 右侧字幕延迟动画，避免同步重复 */
+        .scroll-text.right {
+            animation-delay: 4s;
+        }
+        /* 垂直滚动动画关键帧 */
+        @keyframes scrollVertical {
+            0% { transform: translateY(100%); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100%); opacity: 0; }
+        }
+        .baidu-search-form {
+            display: flex;
+            align-items: center;
+            gap: 0; /* 取消输入框与按钮间距，紧密衔接 */
+            width: 100%;
+            max-width: 600px; /* 限制搜索框最大宽度，适配大屏 */
+        }
+        .search-input {
+            flex: 1; /* 输入框占满剩余空间 */
+            height: 38px;
+            padding: 0 12px;
+            border: 1px solid #81d4fa; /* 边框改为浅蓝，贴合主题 */
+            border-right: none; /* 取消右侧边框，与按钮无缝衔接 */
+            border-radius: 19px 0 0 19px; /* 左圆角 */
+            outline: none;
+            font-size: 14px;
+            color: #01579b; /* 与页面文字主色调统一 */
+            transition: border-color 0.3s ease;
+        }
+        .search-input:focus {
+            border-color: #0288d1; /* 聚焦时边框加深 */
+        }
+        .search-btn {
+            height: 38px;
+            padding: 0 20px;
+            background: linear-gradient(135deg, #81d4fa, #0288d1); /* 渐变背景 */
+            color: #fff;
+            border: 1px solid #81d4fa; /* 边框与输入框一致 */
+            border-radius: 0 19px 19px 0; /* 右圆角 */
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .search-btn:hover {
+            background: linear-gradient(135deg, #0288d1, #01579b); /*  hover 渐变加深 */
+            transform: scale(1.05);
+        }
+        /* 新闻栏：左8行文字 + 右（可自定义宽高图片+文字混合框） */
+        .news-bar {
+            width: 100%;
+            border: 1px solid #81d4fa;
+            border-top: none;
+            border-radius: 0;
+            background: #fff;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: auto; /* 小屏幕自适应高度 */
+            min-height: 400px; /* 最小高度保障 */
+        }
+        @media (min-width: 768px) {
+            .news-bar {
+                height: 550px; /* 大屏固定高度 */
+            }
+        }
+        .content-main {
+            display: flex;
+            flex: 1;
+            padding: 10px;
+            gap: 10px;
+            flex-direction: column; /* 小屏幕纵向排列 */
+        }
+        @media (min-width: 768px) {
+            .content-main {
+                flex-direction: row; /* 大屏横向排列 */
+            }
+        }
+        /* 左侧栏动画 */
+        .text-area-left {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            background: repeating-linear-gradient(
+                to right,
+                transparent,
+                transparent 20px,
+                rgba(129, 212, 250, 0.2) 20px,
+                rgba(129, 212, 250, 0.2) 24px
+            );
+            padding: 10px 5px 5px; /* 顶部预留标题空间 */
+            border: none; /* 移除蓝色边框 */
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateX(-30px);
+            animation: slideInLeft 0.8s ease forwards;
+            animation-delay: 0.2s;
+            margin-bottom: 10px; /* 小屏幕底部留白 */
+        }
+        @media (min-width: 768px) {
+            .text-area-left {
+                margin-bottom: 0;
+            }
+        }
+        /* 左侧栏标题样式 */
+        .left-title {
+            color: #01579b;
+            font-size: 15px; /* 小屏幕缩小字体 */
+            font-weight: bold;
+            text-align: left;
+            margin-bottom: 5px;
+            padding-left: 5px;
+            border-bottom: 1px solid #81d4fa;
+            padding-bottom: 3px;
+        }
+        @media (min-width: 768px) {
+            .left-title {
+                font-size: 16px;
+            }
+        }
+        .text-area-left:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 15px rgba(129, 212, 250, 0.5);
+            border-color: transparent; /* hover也无蓝色边框 */
+        }
+        /* 右侧混合框（可自定义宽高图片） */
+        .right-mix-box {
+            flex: 1;
+            display: flex;
+            gap: 10px;
+            background: repeating-linear-gradient(
+                to right,
+                transparent,
+                transparent 20px,
+                rgba(129, 212, 250, 0.2) 20px,
+                rgba(129, 212, 250, 0.2) 24px
+            );
+            padding: 10px 5px 5px; /* 顶部预留标题空间 */
+            border: none; /* 移除蓝色边框 */
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateX(30px);
+            animation: slideInRight 0.8s ease forwards;
+            animation-delay: 0.4s;
+            flex-direction: column; /* 改为纵向排列：标题+内容 */
+        }
+        .right-mix-box:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 15px rgba(129, 212, 250, 0.5);
+            border-color: transparent; /* hover也无蓝色边框 */
+        }
+        /* 右侧栏标题样式 */
+        .right-title {
+            color: #01579b;
+            font-size: 15px; /* 小屏幕缩小字体 */
+            font-weight: bold;
+            text-align: left;
+            margin-bottom: 5px;
+            padding-left: 5px;
+            border-bottom: 1px solid #81d4fa;
+            padding-bottom: 3px;
+        }
+        @media (min-width: 768px) {
+            .right-title {
+                font-size: 16px;
+            }
+        }
+        /* 右侧混合框内容区（图片+文字横向排列） */
+        .right-content {
+            display: flex;
+            flex: 1;
+            gap: 10px;
+            flex-direction: column; /* 小屏幕纵向排列 */
+        }
+        @media (min-width: 768px) {
+            .right-content {
+                flex-direction: row; /* 大屏横向排列 */
+            }
+        }
+        /* 右侧图片区：支持自定义宽高 */
+        .img-area-in-box {
+            flex: 0.8;
+            display: flex;
+            flex-direction: row; /* 小屏幕图片横向排列 */
+            gap: 10px;
+            padding: 5px;
+            width: 100%;
+            height: 150px; /* 小屏幕图片区固定高度 */
+        }
+        @media (min-width: 768px) {
+            .img-area-in-box {
+                flex-direction: column;
+                height: 100%;
+            }
+        }
+        .img-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px; /* 小屏幕缩小字体 */
+            color: #01579b;
+            text-align: center;
+            transition: transform 0.2s ease;
+            width: 100%;
+            height: 100%;
+        }
+        @media (min-width: 768px) {
+            .img-item {
+                font-size: 14px;
+            }
+        }
+        /* 右侧图片：支持自定义宽高（核心修改） */
+        .right-custom-img {
+            width: 80%; /* 小屏幕图片宽度调整 */
+            height: 70%;
+            object-fit: cover;
+            border-radius: 0;
+            border: none;
+            margin-bottom: 3px;
+        }
+        .img-item:hover {
+            transform: scale(1.05);
+        }
+        /* 动画关键帧 */
+        @keyframes slideInLeft {
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes slideInRight {
+            to { opacity: 1; transform: translateX(0); }
+        }
+        /* 文字行样式 */
+        .text-line {
+            flex: 1;
+            color: #01579b;
+            font-size: 12px; /* 小屏幕缩小字体 */
+            line-height: 1.5;
+            display: flex;
+            align-items: center;
+            padding-left: 5px;
+            text-align: left;
+            transition: color 0.2s ease;
+        }
+        @media (min-width: 768px) {
+            .text-line {
+                font-size: 13px;
+            }
+        }
+        .text-line:hover {
+            color: #0288d1;
+            font-weight: 500;
+        }
+        .text-line::before {
+            content: attr(data-num);
+            font-weight: bold;
+            margin-right: 8px;
+            color: #0288d1;
+        }
+        /* 右侧混合框内的文字区 */
+        .text-area-in-box {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        /* 视频节目栏样式（响应式优化+对齐调整） */
+        .video-section {
+            width: 100%;
+            border: 1px solid #81d4fa;
+            border-top: none;
+            padding: 15px 10px;
+            background: #fff;
+            margin-top: 0;
+        }
+        .video-section-title {
+            color: #0288d1;
+            font-size: 16px; /* 小屏幕缩小字体 */
+            font-weight: bold;
+            text-align: center;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #b3e5fc;
+            margin-bottom: 15px;
+        }
+        @media (min-width: 768px) {
+            .video-section-title {
+                font-size: 18px;
+                padding-bottom: 15px;
+                margin-bottom: 20px;
+            }
+        }
+        /* 核心修改：视频容器移除边框+内边距，与上方新闻栏间距一致 */
+        .video-container {
+            display: flex;
+            border: none; /* 移除容器边框 */
+            border-radius: 4px;
+            overflow: hidden;
+            background: transparent; /* 透明背景 */
+            width: 100%;
+            max-width: 950px;
+            margin: 0 auto;
+            box-shadow: none; /* 移除阴影 */
+            flex-direction: column; /* 小屏幕纵向排列 */
+            padding: 0; /* 消除容器内边距留白 */
+            gap: 10px; /* 小屏幕纵向间距 */
+        }
+        @media (min-width: 768px) {
+            .video-container {
+                flex-direction: row; /* 大屏横向排列 */
+                gap: 10px; /* 横向间距 */
+            }
+        }
+        /* 核心修改：播放区（彻底移除所有蓝色边框） */
+        .play-area {
+            flex: 1; /* 与上方区域宽度比例一致 */
+            position: relative;
+            background: repeating-linear-gradient(
+                to right,
+                transparent,
+                transparent 20px,
+                rgba(129, 212, 250, 0.2) 20px,
+                rgba(129, 212, 250, 0.2) 24px
+            ); /* 保留背景纹理 */
+            height: 200px; /* 小屏幕视频固定高度 */
+            padding: 10px 5px 5px; /* 与上方区域内边距一致 */
+            margin: 0; /* 移除外边距 */
+            border: none; /* 彻底移除蓝色边框 */
+            border-radius: 4px;
+        }
+        @media (min-width: 768px) {
+            .play-area {
+                height: 350px; /* 大屏视频固定高度 */
+            }
+        }
+        /* 核心修改：视频完全铺满播放区（无边框） */
+        #polarVideo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: none; /* 移除视频边框 */
+            padding: 0; /* 移除内边距 */
+            margin: 0; /* 移除外边距 */
+            border-radius: 2px; /* 轻微圆角，贴合播放区 */
+            outline: none; /* 移除聚焦时的蓝色轮廓 */
+        }
+        /* 核心修改：节目列表（彻底移除所有蓝色边框） */
+        .program-column {
+            flex: 1; /* 与上方区域宽度比例一致 */
+            background: repeating-linear-gradient(
+                to right,
+                transparent,
+                transparent 20px,
+                rgba(129, 212, 250, 0.2) 20px,
+                rgba(129, 212, 250, 0.2) 24px
+            ); /* 保留背景纹理 */
+            border: none; /* 彻底移除蓝色边框 */
+            padding: 10px 5px 5px; /* 与上方区域内边距一致 */
+            color: #01579b;
+            border-radius: 4px;
+        }
+        @media (min-width: 768px) {
+            .program-column {
+                border-left: none;
+                border-top: none;
+            }
+        }
+        .column-title {
+            color: #01579b;
+            font-size: 15px; /* 与上方标题字体大小一致 */
+            font-weight: bold;
+            text-align: left; /* 左对齐 */
+            padding-bottom: 3px;
+            border-bottom: 1px solid #81d4fa; /* 保留细下划线（非边框） */
+            margin-bottom: 5px;
+            padding-left: 5px;
+        }
+        .program-header {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 5px; /* 小屏幕缩小内边距 */
+            background: transparent; /* 继承背景纹理 */
+            border: none; /* 移除边框 */
+            margin-bottom: 5px;
+            font-size: 12px; /* 小屏幕缩小字体 */
+        }
+        @media (min-width: 768px) {
+            .program-header {
+                padding: 8px 5px;
+                font-size: 14px;
+            }
+        }
+        .program-header span {
+            color: #01579b;
+            font-weight: bold;
+        }
+        .program-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 5px; /* 小屏幕缩小内边距 */
+            border: 1px solid #e3f2fd; /* 浅灰色边框，非蓝色 */
+            margin-bottom: 5px;
+            cursor: pointer;
+            transition: background 0.2s, border 0.2s;
+            border-radius: 4px;
+            font-size: 12px; /* 小屏幕缩小字体 */
+        }
+        @media (min-width: 768px) {
+            .program-item {
+                padding: 8px 5px;
+                font-size: 14px;
+            }
+        }
+        .program-item:hover {
+            background: rgba(179, 229, 252, 0.3);
+            border-color: #81d4fa; /* hover时浅蓝边框（若需移除可改为transparent） */
+        }
+        .program-item.active {
+            background: rgba(135, 206, 235, 0.2);
+            border-color: #0288d1; /* 激活状态边框（若需移除可改为transparent） */
+        }
+        .program-item span {
+            color: #01579b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .program-item span:nth-child(1) {width: 45%;} /* 小屏幕调整列宽比例 */
+        .program-item span:nth-child(2) {width: 25%; text-align: center;}
+        .program-item span:nth-child(3) {width: 30%; text-align: right;}
+        @media (min-width: 768px) {
+            .program-item span:nth-child(1) {width: 120px;}
+            .program-item span:nth-child(2) {width: 80px;}
+            .program-item span:nth-child(3) {width: 80px;}
+        }
+        .more-btn {
+            margin-top: 15px;
+            text-align: right;
+            padding-right: 5px; /* 与文字区内边距一致 */
+        }
+        .more-btn a {
+            text-decoration: none;
+        }
+        .more-btn button {
+            background: #0288d1;
+            color: #ffffff;
+            border: none;
+            padding: 5px 10px; /* 小屏幕缩小按钮 */
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            outline: 2px solid transparent;
+            transition: background 0.2s;
+            font-size: 12px;
+        }
+        @media (min-width: 768px) {
+            .more-btn button {
+                padding: 6px 12px;
+                font-size: 14px;
+            }
+        }
+        .more-btn button:hover {
+            background: #01579b;
+        }
+        .more-btn button:focus {
+            outline-color: #81d4fa;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <!-- 顶部信息栏 -->
+        <div class="top-bar">
+            <div class="top-bar-left">
+                今日 <span class="real-date" id="realDate">2025年12月09日 周二</span> - 江阳区 <span id="realTimeWeather">雾 9℃</span>
+            </div>
+            <div class="top-bar-right">南北极生态 · 极地生命图鉴</div>
+        </div>
+        <!-- 轮播区（上下滚动，图片铺满横幅） -->
+        <div class="carousel-area">
+            <div class="carousel-content" id="carouselContent">
+                <div class="carousel-item">
+                    <div class="custom-img-container">
+                        <img src="bjx.jpg" alt="北极 · 北极熊" class="custom-img">
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="custom-img-container">
+                        <img src="dqe.jpg" alt="南极 · 帝企鹅" class="custom-img">
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="custom-img-container">
+                        <img src="lx.jpg" alt="南极 · 磷虾群" class="custom-img">
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="custom-img-container">
+                        <img src="bjh.jpg" alt="北极 · 北极狐" class="custom-img">
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="custom-img-container">
+                        <img src="sqhb.jpg" alt="北极 · 竖琴海豹" class="custom-img">
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-label" id="carouselLabel">北极 · 北极熊</div>
+        </div>
+        <!-- 新增导航菜单 - 含"张政"超链接 -->
+        <nav class="nav-menu">
+            <ul class="nav-list">
+                <li class="nav-item"><a href="aaa4.html" target="_blank">首页</a></li>
+                <li class="nav-item"><a href="zwjj.html" target="_blank">张政</a></li>
+                <li class="nav-item"><a href="smtj.html" target="_blank">生命图鉴</a></li> <!-- 超链接到自我简介网页 -->
+                <li class="nav-item"><a href="kksj.html" target="_blank">科考数据</a></li>
+                <li class="nav-item"><a href="stxz.html" target="_blank">极地生态现状</a></li>
+                <li class="nav-item"><a href="" target="_blank">极地生态保护</a></li>
+                <li class="nav-item"><a href="" target="_blank">极地科考新发现</a></li>
+            </ul>
+        </nav>
+        <!-- 新闻栏：带动画的左右栏 -->
+        <div class="news-bar">
+            <div class="content-main">
+                <!-- 左侧栏（添加顶部标题“极地生态”） -->
+                <div class="text-area-left" id="polar-ecology">
+                    <div class="left-title">极地生态</div>
+                    <div class="text-line" data-num="①">北极海冰面积40年减40%，夏季最小覆盖仅450万平方公里</div>
+                    <div class="text-line" data-num="②">北极熊栖息地缩减致觅食难，部分种群体重下降20%</div>
+                    <div class="text-line" data-num="③">南极磷虾存活率降15%，海水酸化影响幼体甲壳形成</div>
+                    <div class="text-line" data-num="④">南极冰架崩解创新高，2023年隆尼冰架崩解面积超1200平方公里</div>
+                    <div class="text-line" data-num="⑤">威德尔海豹繁殖地受暖水入侵威胁，幼崽存活率同比降8%</div>
+                    <div class="text-line" data-num="⑥">北极燕鸥迁徙路线偏移2000km，为躲避无冰区延长飞行时间</div>
+                    <div class="text-line" data-num="⑦">南极阿德利企鹅数量20年降20%，栖息地被融冰淹没</div>
+                    <div class="text-line" data-num="⑧">极地海洋酸化速率达全球平均2倍，珊瑚、贝类生存受胁</div>
+                </div>
+                <!-- 右侧混合框（添加顶部标题“生态图鉴”，图片可自定义宽高） -->
+                <div class="right-mix-box" id="life-atlas">
+                    <div class="right-title">生命图鉴</div>
+                    <div class="right-content">
+                        <!-- 右侧图片区（可自定义整体宽高） -->
+                        <div class="img-area-in-box">
+                            <!-- 北极熊图片：可单独修改宽高 -->
+                            <div class="img-item">
+                                <img src="xuexiao.jpg" alt="雪鸮" class="right-custom-img" style="width: 70%; height: 70%;">
+                            </div>
+                            <!-- 帝企鹅图片：可单独修改宽高 -->
+                            <div class="img-item">
+                                <img src="adlqe.jpg" alt="阿德利企鹅" class="right-custom-img" style="width: 70%; height: 70%;">
+                            </div>
+                            <!-- 南极磷虾图片：可单独修改宽高 -->
+                            <div class="img-item">
+                                <img src="bjxl.jpg" alt="北极驯鹿" class="right-custom-img" style="width: 70%; height: 70%;">
+                            </div>
+                        </div>
+                        <!-- 右侧文字区 -->
+                        <div class="text-area-in-box" id="research-data">
+                            <div class="text-line"></div>
+                            <div class="text-line">极端气候导致啮齿类猎物减少30%，北极苔原植被退化，灌木覆盖率升12%，改变食草动物栖息地北极狐种群数量波动</div>
+                            <div class="text-line"></div>
+                            <div class="text-line">极地科考新发现：南极海豹幼崽存活率降，海冰提前消融致哺乳周期缩短全球变暖使两极升温速率达全球平均3倍</div>
+                            <div class="text-line"></div>
+                            <div class="text-line">南极生态监测数据：近10年冰盖物质损失达2800亿吨/年,北极航运活动增50%，噪音污染干扰海洋生物导航与通讯</div>
+                            <div class="text-line"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 视频节目栏（支持添加自定义视频链接） -->
+        <div class="video-section">
+            <div class="video-section-title">南北极生态视频节目</div>
+            <div class="video-container">
+                <!-- 左侧HTML5视频播放区（无蓝色边框） -->
+                <div class="play-area">
+                    <video 
+                        id="polarVideo" 
+                        controls 
+                        autoplay 
+                        muted 
+                        preload="metadata"
+                        poster="https://picsum.photos/seed/polarbright/800/500" 
+                    >
+                        <!-- 替换为自己的视频链接（支持MP4/OGG格式） -->
+                        <source src="beijixio.mp4" type="video/mp4">
+                        <source src="你的视频链接.ogg" type="video/ogg">
+                        
+                    </video>
+                </div>
+                <!-- 右侧节目列表栏（无蓝色边框） -->
+                <div class="program-column">
+                    <div class="column-title">节目列表</div>
+                    
+                    <div class="program-header">
+                        <span>节目名</span>
+                        <span>主演</span>
+                        <span>日期</span>
+                    </div>
+                    <!-- 节目1：替换 data-video-src 为自己的视频链接，data-video-poster 为封面图链接 -->
+                    <div class="program-item active" 
+                         data-video-src="beijixio.mp4" 
+                         data-video-poster="你的封面图链接1.jpg"> <!-- 自定义视频封面（可选） -->
+                        <span>北极熊日记</span>
+                        <span>北极熊</span>
+                        <span>2025-12-01</span>
+                    </div>
+                    <!-- 节目2：同理替换 -->
+                    <div class="program-item" 
+                         data-video-src="dqe12.mp4" 
+                         data-video-poster="你的封面图链接2.jpg">
+                        <span>帝企鹅的生存挑战</span>
+                        <span>帝企鹅</span>
+                        <span>2025-11-28</span>
+                    </div>
+                    <!-- 节目3：同理替换 -->
+                    <div class="program-item" 
+                         data-video-src="adl12.mp4" 
+                         data-video-poster="你的封面图链接3.jpg">
+                        <span>阿德利企鹅的日常</span>
+                        <span>阿德利</span>
+                        <span>2025-11-20</span>
+                    </div>
+                    <!-- 节目4：同理替换 -->
+                    <div class="program-item" 
+                         data-video-src="bjh12.mp4" 
+                         data-video-poster="你的封面图链接4.jpg">
+                        <span>北极狐种群追踪</span>
+                        <span>北极狐</span>
+                        <span>2025-11-15</span>
+                    </div>
+                    <!-- 节目5：同理替换 -->
+                    <div class="program-item" 
+                         data-video-src="wdr12.mp4" 
+                         data-video-poster="你的封面图链接5.jpg">
+                        <span>威德尔海豹日记</span>
+                        <span>威德尔</span>
+                        <span>2025-11-10</span>
+                    </div>
+                    <!-- more按钮：修改为超链接，指向二次网页 -->
+                    <div class="more-btn">
+                        <a href="bbb.html" target="_blank">
+                            <button type="button">more</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 百度搜索区域（带左右滑动字幕） -->
+        <div class="search-area">
+            <!-- 左侧滑动字幕 -->
+            <div class="scroll-text-container">
+                <div class="scroll-text left">
+                    保护极地生态<br>
+                    守护地球净土<br>
+                    关注冰川变化<br>
+                    共建蓝色星球
+                </div>
+            </div>
+            <!-- 搜索表单 -->
+            <form action="https://www.baidu.com/s" method="get" target="_blank" class="baidu-search-form">
+                <input type="text" name="wd" class="search-input" placeholder="输入关键词搜索...">
+                <input type="submit" value="百度一下" class="search-btn">
+            </form>
+            <!-- 右侧滑动字幕 -->
+            <div class="scroll-text-container">
+                <div class="scroll-text right">
+                    北极熊保护计划<br>
+                    南极冰盖监测<br>
+                    极地生物图鉴<br>
+                    全球变暖预警
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // 实时天气功能
+        const hourlyWeather = [
+            {hour:8, weather:"雾", temp:9},
+            {hour:9, weather:"多云", temp:9},
+            {hour:10, weather:"多云", temp:12},
+            {hour:11, weather:"阴", temp:14},
+            {hour:12, weather:"阴", temp:15},
+            {hour:13, weather:"阴", temp:15},
+            {hour:14, weather:"阴", temp:15},
+            {hour:15, weather:"阴", temp:16},
+            {hour:16, weather:"阴", temp:16},
+            {hour:17, weather:"阴", temp:16},
+            {hour:18, weather:"阴", temp:15},
+            {hour:19, weather:"阴", temp:15},
+            {hour:20, weather:"阴", temp:15},
+            {hour:21, weather:"阴", temp:14},
+            {hour:22, weather:"阴", temp:14},
+            {hour:23, weather:"阴", temp:14}
+        ];
+        function updateRealTimeWeather() {
+            const now = new Date();
+            const currentHour = now.getHours();
+            const weatherElement = document.getElementById('realTimeWeather');
+            const currentWeather = hourlyWeather.find(item => item.hour === currentHour) || hourlyWeather.find(item => item.hour === 15);
+            weatherElement.textContent = `${currentWeather.weather} ${currentWeather.temp}℃`;
+        }
+        updateRealTimeWeather();
+        setInterval(updateRealTimeWeather, 3600000);
+        // 日期格式：xxxx年xx月xx日 星期x
+        const weekDays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+        function formatRealDate() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const week = weekDays[now.getDay()];
+            return `${year}年${month}月${day}日 ${week}`;
+        }
+        function updateRealDate() {
+            const dateElement = document.getElementById('realDate');
+            dateElement.textContent = formatRealDate();
+        }
+        updateRealDate();
+        setInterval(updateRealDate, 86400000);
+        // 轮播功能（上下滚动）
+        const carouselContent = document.getElementById('carouselContent');
+        const carouselLabel = document.getElementById('carouselLabel');
+        const labels = [
+            '北极 · 北极熊', 
+            '南极 · 帝企鹅', 
+            '南极 · 磷虾群', 
+            '北极 · 北极狐', 
+            '北极 · 竖琴海豹'
+        ];
+        let currentIndex = 0;
+        const itemCount = document.querySelectorAll('.carousel-item').length;
+        function switchCarousel(index) {
+            carouselContent.style.transform = `translateY(-${index * 100}%)`;
+            carouselLabel.textContent = labels[index];
+            currentIndex = index;
+        }
+        setInterval(() => {
+            const nextIndex = (currentIndex + 1) % itemCount;
+            switchCarousel(nextIndex);
+        }, 3000);
+        // 视频节目栏功能（保持原有逻辑，支持自定义链接）
+        const video = document.getElementById('polarVideo');
+        const programItems = document.querySelectorAll('.program-item');
+        const moreBtn = document.querySelector('.more-btn button');
+        // 节目切换功能：点击节目时加载自定义视频链接
+        programItems.forEach(item => {
+            item.addEventListener('click', () => {
+                programItems.forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+                const videoSrc = item.dataset.videoSrc; // 获取自定义视频链接
+                const videoPoster = item.dataset.videoPoster; // 获取自定义封面图
+                video.poster = videoPoster;
+                video.src = videoSrc;
+                video.load();
+                video.play();
+            });
+        });
+        // 视频循环播放
+        video.addEventListener('ended', () => {
+            video.currentTime = 0;
+            video.play();
+        });
+        // more按钮功能：已改为超链接，此处保留原事件（无实际作用，可删除）
+      
+    </script>
+</body>
+</html>

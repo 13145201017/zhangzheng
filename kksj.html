@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>科考数据 - 南北极生态</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #f0f8ff; font-family: "SimSun", serif; }
+        .page-container { max-width: 1000px; margin: 0 auto; width: 100%; }
+        .top-bar { border: 1px solid #81d4fa; background-color: #e0f7fa; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; }
+        .top-bar-left { color: #01579b; font-size: 14px; display: flex; gap: 20px; }
+        .top-bar-right { color: #0288d1; font-weight: bold; font-size: 14px; }
+        .real-date { color: #0288d1; font-weight: bold; }
+        .nav-menu { width: 100%; border: 1px solid #81d4fa; border-top: none; background: linear-gradient(120deg, #e0f7fa, #f0f8ff); padding: 10px 0; }
+        .nav-list { display: flex; justify-content: flex-start; padding-left: 20px; gap: 40px; list-style: none; }
+        .nav-item a { text-decoration: none; color: #01579b; font-size: 15px; font-weight: 500; padding: 6px 16px; border-radius: 20px; transition: all 0.3s ease; display: inline-block; }
+        .nav-item a:hover { background: linear-gradient(135deg, #81d4fa, #0288d1); color: #fff; transform: scale(1.1); box-shadow: 0 3px 8px rgba(129, 212, 250, 0.6); }
+        .content-area { border: 1px solid #81d4fa; border-top: none; background: #fff; padding: 20px; min-height: 600px; }
+        .content-title { color: #01579b; font-size: 22px; font-weight: bold; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid #81d4fa; }
+        .data-table-container { overflow-x: auto; margin: 20px 0; }
+        /* 动画1：表格渐入+边框闪烁 */
+        .data-table { 
+            width: 100%; border-collapse: collapse;
+            opacity: 0; animation: tableFadeIn 1.2s ease forwards;
+        }
+        .data-table th, .data-table td { 
+            border: 1px solid #81d4fa; padding: 12px; text-align: center; color: #01579b;
+            position: relative;
+        }
+        .data-table th { 
+            background-color: #e0f7fa; font-weight: bold;
+            animation: borderPulse 2s infinite;
+        }
+        .data-table tr:nth-child(even) { background-color: #f8ffff; }
+        /* 动画2：数据行hover高亮滑动 */
+        .data-table tbody tr {
+            transition: all 0.3s ease; position: relative; overflow: hidden;
+        }
+        .data-table tbody tr::after {
+            content: ""; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background-color: rgba(129, 212, 250, 0.2); transition: left 0.3s ease;
+        }
+        .data-table tbody tr:hover { background-color: #e8f4f8; transform: scale(1.01); }
+        .data-table tbody tr:hover::after { left: 0; }
+        .data-section { margin-bottom: 30px; }
+        .section-title { color: #0288d1; font-size: 18px; margin: 15px 0; }
+        .section-note { color: #666; font-size: 13px; margin-top: 10px; font-style: italic; }
+        /* 动画关键帧 */
+        @keyframes tableFadeIn {
+            to { opacity: 1; }
+        }
+        @keyframes borderPulse {
+            0%, 100% { border-color: #81d4fa; }
+            50% { border-color: #0288d1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <div class="top-bar">
+            <div class="top-bar-left">
+                今日 <span class="real-date" id="realDate">2025年12月09日 周二</span> - 江阳区 <span id="realTimeWeather">雾 9℃</span>
+            </div>
+            <div class="top-bar-right">南北极生态 · 极地生命图鉴</div>
+        </div>
+        <nav class="nav-menu">
+            <ul class="nav-list">
+                <li class="nav-item"><a href="aaa4.html" target="_blank">返回主页面</a></li>
+                <li class="nav-item"><a href="smtj.html" target="_blank">生命图鉴</a></li>
+                <li class="nav-item"><a href="zwjj.html" target="_blank">张政</a></li>
+                <li class="nav-item"><a href="kksj.html" target="_blank">科考数据</a></li>
+            </ul>
+        </nav>
+        <div class="content-area">
+            <h1 class="content-title">极地科考核心数据</h1>
+            <div class="data-section">
+                <h2 class="section-title">一、气候与环境数据（2020-2024年平均）</h2>
+                <div class="data-table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <<th>监测指标</</th>
+                                <<th>北极地区</</th>
+                                <<th>南极地区</</th>
+                                <<th>全球平均</</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>年平均升温速率（℃/10年）</td>
+                                <td>0.74</td>
+                                <td>0.68</td>
+                                <td>0.23</td>
+                            </tr>
+                            <tr>
+                                <td>海洋酸化速率（pH值/10年）</td>
+                                <td>-0.04</td>
+                                <td>-0.038</td>
+                                <td>-0.02</td>
+                            </tr>
+                            <tr>
+                                <td>海冰面积缩减率（%/年）</td>
+                                <td>1.02</td>
+                                <td>0.35</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td>冰盖物质损失（亿吨/年）</td>
+                                <td>1500</td>
+                                <td>2800</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td>极端天气事件频次（次/年）</td>
+                                <td>18</td>
+                                <td>12</td>
+                                <td>-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="section-note">数据来源：IPCC第六次评估报告、南极条约秘书处监测数据、北极理事会生态监测项目</p>
+            </div>
+            <div class="data-section">
+                <h2 class="section-title">二、物种种群变化数据（2004-2024年）</h2>
+                <div class="data-table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <<th>物种名称</</th>
+                                <<th>栖息地</</th>
+                                <<th>种群数量变化（%）</</th>
+                                <<th>主要影响因素</</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>北极熊</td>
+                                <td>北极海冰区</td>
+                                <td>-20</td>
+                                <td>海冰缩减、觅食困难</td>
+                            </tr>
+                            <tr>
+                                <td>阿德利企鹅</td>
+                                <td>南极大陆边缘</td>
+                                <td>-20</td>
+                                <td>栖息地淹没、磷虾减少</td>
+                            </tr>
+                            <tr>
+                                <td>南极磷虾</td>
+                                <td>南极半岛海域</td>
+                                <td>-15</td>
+                                <td>海水酸化、温度升高</td>
+                            </tr>
+                            <tr>
+                                <td>北极狐</td>
+                                <td>北极苔原</td>
+                                <td>-12</td>
+                                <td>猎物减少、栖息地退化</td>
+                            </tr>
+                            <tr>
+                                <td>威德尔海豹</td>
+                                <td>南极威德尔海</td>
+                                <td>-8</td>
+                                <td>暖水入侵、繁殖地受损</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="section-note">数据来源：世界自然保护联盟（IUCN）红色名录、极地科考站长期监测数据</p>
+            </div>
+            <div class="data-section">
+                <h2 class="section-title">三、关键生态事件数据</h2>
+                <div class="data-table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <<th>事件类型</</th>
+                                <<th>发生时间</</th>
+                                <<th>发生区域</</th>
+                                <<th>影响范围/规模</</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>冰架崩解</td>
+                                <td>2023年</td>
+                                <td>南极隆尼冰架</td>
+                                <td>崩解面积1200平方公里</td>
+                            </tr>
+                            <tr>
+                                <td>海冰异常消融</td>
+                                <td>2022年夏季</td>
+                                <td>北极波弗特海</td>
+                                <td>消融面积较常年多30%</td>
+                            </tr>
+                            <tr>
+                                <td>物种迁徙路线偏移</td>
+                                <td>2018-2024年</td>
+                                <td>北极燕鸥迁徙路径</td>
+                                <td>偏移距离达2000km</td>
+                            </tr>
+                            <tr>
+                                <td>苔原植被退化</td>
+                                <td>2000-2024年</td>
+                                <td>北极阿拉斯加地区</td>
+                                <td>灌木覆盖率上升12%</td>
+                            </tr>
+                            <tr>
+                                <td>航运活动增长</td>
+                                <td>1974-2024年</td>
+                                <td>北极东北航道</td>
+                                <td>通航频次增长50%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="section-note">数据来源：美国国家冰雪数据中心、南极科考站现场观测记录、国际海事组织航运统计</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        // 实时日期和天气功能（与主页面一致）
+        const weekDays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+        function formatRealDate() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const week = weekDays[now.getDay()];
+            return `${year}年${month}月${day}日 ${week}`;
+        }
+        document.getElementById('realDate').textContent = formatRealDate();
+        
+        const hourlyWeather = [
+            {hour:8, weather:"雾", temp:9},
+            {hour:9, weather:"多云", temp:9},
+            {hour:10, weather:"多云", temp:12},
+            {hour:11, weather:"阴", temp:14},
+            {hour:12, weather:"阴", temp:15},
+            {hour:13, weather:"阴", temp:15},
+            {hour:14, weather:"阴", temp:15},
+            {hour:15, weather:"阴", temp:16},
+            {hour:16, weather:"阴", temp:16},
+            {hour:17, weather:"阴", temp:16},
+            {hour:18, weather:"阴", temp:15},
+            {hour:19, weather:"阴", temp:15},
+            {hour:20, weather:"阴", temp:15},
+            {hour:21, weather:"阴", temp:14},
+            {hour:22, weather:"阴", temp:14},
+            {hour:23, weather:"阴", temp:14}
+        ];
+        function updateRealTimeWeather() {
+            const now = new Date();
+            const currentHour = now.getHours();
+            const currentWeather = hourlyWeather.find(item => item.hour === currentHour) || hourlyWeather.find(item => item.hour === 15);
+            document.getElementById('realTimeWeather').textContent = `${currentWeather.weather} ${currentWeather.temp}℃`;
+        }
+        updateRealTimeWeather();
+        setInterval(updateRealTimeWeather, 3600000);
+    </script>
+</body>
+</html>

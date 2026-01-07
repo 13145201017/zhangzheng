@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自我简介 - 张政</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #f0f8ff;
+            padding: 0;
+            font-family: "SimSun", serif;
+            color: #01579b;
+        }
+        .page-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        /* 顶部信息栏（与主页面一致） */
+        .top-bar {
+            border: 1px solid #81d4fa;
+            background-color: #e0f7fa;
+            padding: 8px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .top-bar-left {
+            color: #01579b;
+            font-size: 14px;
+            display: flex;
+            gap: 20px;
+        }
+        .top-bar-right {
+            color: #0288d1;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .real-date {
+            color: #0288d1;
+            font-weight: bold;
+        }
+        /* 导航栏（与主页面一致，增加返回主页面选项） */
+        .nav-menu {
+            width: 100%;
+            border: 1px solid #81d4fa;
+            border-top: none;
+            background: linear-gradient(120deg, #e0f7fa, #f0f8ff);
+            padding: 10px 0;
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: navSlideIn 1s ease forwards;
+            animation-delay: 0.3s;
+        }
+        .nav-list {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            list-style: none;
+        }
+        .nav-item a {
+            text-decoration: none;
+            color: #01579b;
+            font-size: 15px;
+            font-weight: 500;
+            padding: 6px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        .nav-item a:hover {
+            background: linear-gradient(135deg, #81d4fa, #0288d1);
+            color: #fff;
+            transform: scale(1.1);
+            box-shadow: 0 3px 8px rgba(129, 212, 250, 0.6);
+        }
+        @keyframes navSlideIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        /* 简介主体区域 */
+        .intro-main {
+            border: 1px solid #81d4fa;
+            border-top: none;
+            background: #fff;
+            padding: 30px 40px;
+            min-height: calc(100vh - 130px);
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+        }
+        /* 左侧头像区 */
+        .avatar-area {
+            flex: 0 0 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            opacity: 0;
+            transform: translateX(-30px);
+            animation: slideInLeft 0.8s ease forwards;
+            animation-delay: 0.6s;
+        }
+        .avatar-img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 3px solid #81d4fa;
+            object-fit: cover;
+            box-shadow: 0 0 15px rgba(129, 212, 250, 0.4);
+        }
+        .avatar-name {
+            font-size: 22px;
+            font-weight: bold;
+            color: #0288d1;
+        }
+        .avatar-desc {
+            font-size: 14px;
+            color: #01579b;
+            text-align: center;
+            line-height: 1.5;
+        }
+        /* 右侧信息区 */
+        .info-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            opacity: 0;
+            transform: translateX(30px);
+            animation: slideInRight 0.8s ease forwards;
+            animation-delay: 0.8s;
+        }
+        .info-section {
+            background: repeating-linear-gradient(
+                to right,
+                transparent,
+                transparent 20px,
+                rgba(129, 212, 250, 0.1) 20px,
+                rgba(129, 212, 250, 0.1) 24px
+            );
+            padding: 15px 20px;
+            border-radius: 8px;
+            border-left: 3px solid #0288d1;
+        }
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #0288d1;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #81d4fa;
+            padding-bottom: 5px;
+        }
+        .section-content {
+            font-size: 14px;
+            line-height: 1.8;
+            color: #01579b;
+        }
+        .content-list {
+            padding-left: 20px;
+        }
+        .content-list li {
+            margin-bottom: 8px;
+        }
+        /* 动画关键帧 */
+        @keyframes slideInLeft {
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes slideInRight {
+            to { opacity: 1; transform: translateX(0); }
+        }
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .intro-main {
+                flex-direction: column;
+                padding: 20px;
+            }
+            .avatar-area {
+                flex: none;
+                transform: translateY(-20px);
+                animation: slideInUp 0.8s ease forwards;
+            }
+            .info-area {
+                transform: translateY(20px);
+                animation: slideInDown 0.8s ease forwards;
+            }
+            @keyframes slideInUp {
+                to { opacity: 1; transform: translateY(0); }
+            }
+            @keyframes slideInDown {
+                to { opacity: 1; transform: translateY(0); }
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <!-- 顶部信息栏 -->
+        <div class="top-bar">
+            <div class="top-bar-left">
+                今日 <span class="real-date" id="realDate">2025年12月09日 周二</span> - 江阳区 <span id="realTimeWeather">雾 9℃</span>
+            </div>
+            <div class="top-bar-right">自我简介 · 张政</div>
+        </div>
+        <!-- 导航栏 -->
+        <nav class="nav-menu">
+            <ul class="nav-list">
+                <li class="nav-item"><a href="aaa4.html">返回主页面</a></li> <!-- 需替换为你的主页面实际文件名 -->
+                <li class="nav-item"><a href="#basic-info">基本信息</a></li>
+                <li class="nav-item"><a href="#interest">兴趣爱好</a></li>
+                <li class="nav-item"><a href="#polar-attention">极地关注</a></li>
+            </ul>
+        </nav>
+        <!-- 简介主体 -->
+        <div class="intro-main">
+            <!-- 左侧头像 -->
+            <div class="avatar-area">
+                <img src="tx.jpg" alt="张政头像" class="avatar-img"> <!-- 替换为头像图片路径 -->
+                <div class="avatar-name">张政</div>
+                <div class="avatar-desc">中职学生<br>自然与极地爱好者</div>
+            </div>
+            <!-- 右侧信息 -->
+            <div class="info-area">
+                <div class="info-section" id="basic-info">
+                    <div class="section-title">基本信息</div>
+                    <div class="section-content">
+                        <p>姓名：张政</p>
+                        <p>年龄：17岁</p>
+                        <p>学校：XX中等职业学校</p>
+                        <p>专业：计算机应用</p>
+                        <p>坐标：四川泸州</p>
+                        <p>座右铭：保持好奇，热爱生活，关注自然</p>
+                    </div>
+                </div>
+                <div class="info-section" id="interest">
+                    <div class="section-title">兴趣爱好</div>
+                    <div class="section-content">
+                        <ul class="content-list">
+                            <li>阅读科普书籍：尤其喜欢自然、地理类读物，经常看关于南北极的纪录片和文章</li>
+                            <li>计算机技能：擅长基础的图文排版、简单视频剪辑，偶尔会制作自然主题的小视频</li>
+                            <li>户外活动：周末喜欢和同学去公园、郊外散步，观察身边的动植物，记录自然美景</li>
+                            <li>环保小事：平时会注意节约用电用水、垃圾分类，和同学一起参与学校组织的环保宣传活动</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-section" id="polar-attention">
+                    <div class="section-title">对极地的关注</div>
+                    <div class="section-content">
+                        <p>虽然我只是一名中职生，但一直对遥远的南北极充满好奇，主要关注这些方面：</p>
+                        <ul class="content-list">
+                            <li>通过纪录片和科普账号，了解北极熊、企鹅等极地动物的生活习性，心疼它们因为环境变化面临的生存挑战</li>
+                            <li>关注极地环境新闻，知道海冰消融、海洋酸化对地球生态的影响，也会和同学讨论如何从身边小事保护环境</li>
+                            <li>用自己的计算机技能，整理过简单的"极地动物图鉴"PPT，在班级分享会上介绍极地知识，希望让更多同学关注自然保护</li>
+                        </ul>
+                        <p style="margin-top: 10px;">未来希望继续学习专业技能，同时保持对自然的热爱，用自己的方式为环保出一份力，也期待有机会通过更多渠道了解极地的故事。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // 实时天气和日期功能（与主页面一致）
+        const hourlyWeather = [
+            {hour:8, weather:"雾", temp:9},
+            {hour:9, weather:"多云", temp:9},
+            {hour:10, weather:"多云", temp:12},
+            {hour:11, weather:"阴", temp:14},
+            {hour:12, weather:"阴", temp:15},
+            {hour:13, weather:"阴", temp:15},
+            {hour:14, weather:"阴", temp:15},
+            {hour:15, weather:"阴", temp:16},
+            {hour:16, weather:"阴", temp:16},
+            {hour:17, weather:"阴", temp:16},
+            {hour:18, weather:"阴", temp:15},
+            {hour:19, weather:"阴", temp:15},
+            {hour:20, weather:"阴", temp:15},
+            {hour:21, weather:"阴", temp:14},
+            {hour:22, weather:"阴", temp:14},
+            {hour:23, weather:"阴", temp:14}
+        ];
+        function updateRealTimeWeather() {
+            const now = new Date();
+            const currentHour = now.getHours();
+            const weatherElement = document.getElementById('realTimeWeather');
+            const currentWeather = hourlyWeather.find(item => item.hour === currentHour) || hourlyWeather.find(item => item.hour === 15);
+            weatherElement.textContent = `${currentWeather.weather} ${currentWeather.temp}℃`;
+        }
+        updateRealTimeWeather();
+        setInterval(updateRealTimeWeather, 3600000);
+        // 日期格式：xxxx年xx月xx日 星期x
+        const weekDays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+        function formatRealDate() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const week = weekDays[now.getDay()];
+            return `${year}年${month}月${day}日 ${week}`;
+        }
+        function updateRealDate() {
+            const dateElement = document.getElementById('realDate');
+            dateElement.textContent = formatRealDate();
+        }
+        updateRealDate();
+        setInterval(updateRealDate, 86400000);
+    </script>
+</body>
+</html>

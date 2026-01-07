@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>更多南北极生态节目</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #f0f8ff;
+            padding: 0;
+            font-family: "SimSun", serif;
+        }
+        .page-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 0 5px;
+        }
+        .top-bar {
+            border: 1px solid #81d4fa;
+            background-color: #e0f7fa;
+            padding: 8px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .top-bar-left {
+            color: #01579b;
+            font-size: 14px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .top-bar-right {
+            color: #0288d1;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .real-date {
+            color: #0288d1;
+            font-weight: bold;
+        }
+        .carousel-area {
+            border: 1px solid #81d4fa;
+            border-top: none;
+            background-color: #f0f8ff;
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+        }
+        @media (min-width: 768px) {
+            .carousel-area {
+                height: 300px;
+            }
+        }
+        .carousel-content {
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.5s ease;
+            height: 100%;
+        }
+        .carousel-item {
+            min-height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+        .custom-img-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .custom-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 0;
+            border: none;
+        }
+        .carousel-label {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(129, 212, 250, 0.8);
+            color: #01579b;
+            padding: 3px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            z-index: 10;
+        }
+        @media (min-width: 768px) {
+            .carousel-label {
+                bottom: 20px;
+                font-size: 14px;
+            }
+        }
+        .nav-menu {
+            width: 100%;
+            border: 1px solid #81d4fa;
+            border-top: none;
+            background: linear-gradient(120deg, #e0f7fa, #f0f8ff);
+            padding: 8px 0;
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: navSlideIn 1s ease forwards;
+            animation-delay: 0.6s;
+            overflow-x: auto;
+        }
+        .nav-list {
+            display: flex;
+            justify-content: flex-start;
+            padding: 0 10px;
+            gap: 20px;
+            list-style: none;
+            white-space: nowrap;
+        }
+        @media (min-width: 768px) {
+            .nav-list {
+                padding-left: 20px;
+                gap: 40px;
+            }
+        }
+        .nav-item a {
+            text-decoration: none;
+            color: #01579b;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 4px 12px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        @media (min-width: 768px) {
+            .nav-item a {
+                font-size: 15px;
+                padding: 6px 16px;
+            }
+        }
+        .nav-item a:hover {
+            background: linear-gradient(135deg, #81d4fa, #0288d1);
+            color: #fff;
+            transform: scale(1.1);
+            box-shadow: 0 3px 8px rgba(129, 212, 250, 0.6);
+        }
+        @keyframes navSlideIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .video-section {
+            width: 100%;
+            border: 1px solid #81d4fa;
+            border-top: none;
+            padding: 15px 10px;
+            background: #fff;
+            margin-top: 0;
+        }
+        .video-section-title {
+            color: #0288d1;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #b3e5fc;
+            margin-bottom: 15px;
+        }
+        @media (min-width: 768px) {
+            .video-section-title {
+                font-size: 18px;
+                padding-bottom: 15px;
+                margin-bottom: 20px;
+            }
+        }
+        /* 核心修改：视频容器移除边框+内边距 */
+        .video-container {
+            display: flex;
+            border: none; /* 移除容器边框 */
+            border-radius: 4px;
+            overflow: hidden;
+            background: transparent; /* 透明背景 */
+            width: 100%;
+            max-width: 950px;
+            margin: 0 auto;
+            box-shadow: none; /* 移除阴影 */
+            flex-direction: column;
+            padding: 0; /* 消除内边距留白 */
+            gap: 10px; /* 间距与首页一致 */
+        }
+        @media (min-width: 768px) {
+            .video-container {
+                flex-direction: row;
+            }
+        }
+        /* 核心修改：播放区彻底移除蓝色边框 */
+        .play-area {
+            flex: 1; /* 宽度比例与首页一致 */
+            position: relative;
+            background: repeating-linear-gradient(
+                to right,
+                transparent,
+                transparent 20px,
+                rgba(129, 212, 250, 0.2) 20px,
+                rgba(129, 212, 250, 0.2) 24px
+            ); /* 保留背景纹理 */
+            height: 200px;
+            padding: 10px 5px 5px; /* 内边距与首页一致 */
+            margin: 0;
+            border: none; /* 彻底移除蓝色边框 */
+            border-radius: 4px;
+        }
+        @media (min-width: 768px) {
+            .play-area {
+                height: auto;
+            }
+        }
+        @media (min-width: 1024px) {
+            .play-area {
+                height: 350px;
+            }
+        }
+        /* 核心修改：视频无边框+无聚焦轮廓 */
+        #polarVideo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: none; /* 移除视频边框 */
+            padding: 0;
+            margin: 0;
+            border-radius: 2px;
+            outline: none; /* 移除聚焦蓝色轮廓 */
+        }
+        /* 核心修改：节目列表彻底移除蓝色边框 */
+        .program-column {
+            flex: 1; /* 宽度比例与首页一致 */
+            background: repeating-linear-gradient(
+                to right,
+                transparent,
+                transparent 20px,
+                rgba(129, 212, 250, 0.2) 20px,
+                rgba(129, 212, 250, 0.2) 24px
+            ); /* 保留背景纹理 */
+            border: none; /* 彻底移除蓝色边框 */
+            padding: 10px 5px 5px; /* 内边距与首页一致 */
+            color: #01579b;
+            border-radius: 4px;
+        }
+        @media (min-width: 768px) {
+            .program-column {
+                border-left: none;
+                border-top: none;
+            }
+        }
+        .column-title {
+            color: #01579b;
+            font-size: 15px; /* 与首页标题字体一致 */
+            font-weight: bold;
+            text-align: left; /* 左对齐 */
+            padding-bottom: 3px;
+            border-bottom: 1px solid #81d4fa; /* 保留细下划线 */
+            margin-bottom: 5px;
+            padding-left: 5px;
+        }
+        .program-header {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 5px;
+            background: transparent;
+            border: none; /* 移除边框 */
+            margin-bottom: 5px;
+            font-size: 12px;
+        }
+        @media (min-width: 768px) {
+            .program-header {
+                padding: 8px 5px;
+                font-size: 14px;
+            }
+        }
+        .program-header span {
+            color: #01579b;
+            font-weight: bold;
+        }
+        .program-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 5px;
+            border: 1px solid #e3f2fd; /* 浅灰边框，非蓝色 */
+            margin-bottom: 5px;
+            cursor: pointer;
+            transition: background 0.2s, border 0.2s;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        @media (min-width: 768px) {
+            .program-item {
+                padding: 8px 5px;
+                font-size: 14px;
+            }
+        }
+        .program-item:hover {
+            background: rgba(179, 229, 252, 0.3);
+            border-color: #81d4fa; /* hover浅蓝边框（可改为transparent移除） */
+        }
+        .program-item.active {
+            background: rgba(135, 206, 235, 0.2);
+            border-color: #0288d1; /* 激活状态边框（可改为transparent移除） */
+        }
+        .program-item span {
+            color: #01579b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .program-item span:nth-child(1) {width: 45%;}
+        .program-item span:nth-child(2) {width: 25%; text-align: center;}
+        .program-item span:nth-child(3) {width: 30%; text-align: right;}
+        @media (min-width: 768px) {
+            .program-item span:nth-child(1) {width: 120px;}
+            .program-item span:nth-child(2) {width: 80px;}
+            .program-item span:nth-child(3) {width: 80px;}
+        }
+        .more-btn {
+            margin-top: 15px;
+            text-align: right;
+            padding-right: 5px;
+        }
+        .more-btn button {
+            background: #0288d1;
+            color: #ffffff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            outline: 2px solid transparent;
+            transition: background 0.2s;
+            font-size: 12px;
+        }
+        @media (min-width: 768px) {
+            .more-btn button {
+                padding: 6px 12px;
+                font-size: 14px;
+            }
+        }
+        .more-btn button:hover {
+            background: #01579b;
+        }
+        .more-btn button:focus {
+            outline-color: #81d4fa;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <!-- 顶部信息栏 -->
+        <div class="top-bar">
+            <div class="top-bar-left">
+                今日 <span class="real-date" id="realDate">2025年12月09日 周二</span> - 江阳区 <span id="realTimeWeather">雾 9℃</span>
+            </div>
+            <div class="top-bar-right">南北极生态 · 极地生命图鉴</div>
+        </div>
+        <!-- 轮播区 -->
+        <div class="carousel-area">
+            <div class="carousel-content" id="carouselContent">
+                <div class="carousel-item">
+                    <div class="custom-img-container">
+                        <img src="bjx.jpg" alt="北极 · 北极熊" class="custom-img">
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="custom-img-container">
+                        <img src="dqe.jpg" alt="南极 · 帝企鹅" class="custom-img">
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="custom-img-container">
+                        <img src="lx.jpg" alt="南极 · 磷虾群" class="custom-img">
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="custom-img-container">
+                        <img src="bjh.jpg" alt="北极 · 北极狐" class="custom-img">
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="custom-img-container">
+                        <img src="sqhb.jpg" alt="北极 · 竖琴海豹" class="custom-img">
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-label" id="carouselLabel">北极 · 北极熊</div>
+        </div>
+        <!-- 导航菜单 -->
+        <nav class="nav-menu">
+            <ul class="nav-list">
+                <li class="nav-item"><a href="aaa4.html" target="_blank">首页</a></li>
+                <li class="nav-item"><a href="zwjj.html" target="_blank">张政</a></li>
+                <li class="nav-item"><a href="smtj.html" target="_blank">生命图鉴</a></li>
+                <li class="nav-item"><a href="kksj.html" target="_blank">科考数据</a></li>
+                <li class="nav-item"><a href="stxz.html" target="_blank">极地生态现状</a></li>
+                <li class="nav-item"><a href="" target="_blank">极地生态保护</a></li>
+                <li class="nav-item"><a href="" target="_blank">极地科考新发现</a></li>
+            </ul>
+        </nav>
+        <!-- 视频节目栏（新增2个节目链接） -->
+        <div class="video-section">
+            <div class="video-section-title">南北极生态视频节目</div>
+            <div class="video-container">
+                <div class="play-area">
+                    <video 
+                        id="polarVideo" 
+                        controls 
+                        autoplay 
+                        muted 
+                        preload="metadata"
+                        poster="https://picsum.photos/seed/polarbright/800/500" 
+                    >
+                        <source src="beijixio.mp4" type="video/mp4">
+                        <source src="你的视频链接.ogg" type="video/ogg">
+                    </video>
+                </div>
+                <div class="program-column">
+                    <div class="column-title">节目列表</div>
+                    <div class="program-header">
+                        <span>节目名</span>
+                        <span>主演</span>
+                        <span>日期</span>
+                    </div>
+                    <!-- 原有5个节目 -->
+                    <div class="program-item active" 
+                         data-video-src="beijixio.mp4" 
+                         data-video-poster="你的封面图链接1.jpg">
+                        <span>北极熊日记</span>
+                        <span>北极熊</span>
+                        <span>2025-12-01</span>
+                    </div>
+                    <div class="program-item" 
+                         data-video-src="dqe12.mp4" 
+                         data-video-poster="你的封面图链接2.jpg">
+                        <span>帝企鹅的生存挑战</span>
+                        <span>帝企鹅</span>
+                        <span>2025-11-28</span>
+                    </div>
+                    <div class="program-item" 
+                         data-video-src="adl12.mp4" 
+                         data-video-poster="你的封面图链接3.jpg">
+                        <span>阿德利企鹅的日常</span>
+                        <span>阿德利</span>
+                        <span>2025-11-20</span>
+                    </div>
+                    <div class="program-item" 
+                         data-video-src="bjh12.mp4" 
+                         data-video-poster="你的封面图链接4.jpg">
+                        <span>北极狐种群追踪</span>
+                        <span>北极狐</span>
+                        <span>2025-11-15</span>
+                    </div>
+                    <div class="program-item" 
+                         data-video-src="wdr12.mp4" 
+                         data-video-poster="你的封面图链接5.jpg">
+                        <span>威德尔海豹日记</span>
+                        <span>威德尔</span>
+                        <span>2025-11-10</span>
+                    </div>
+                    <!-- 新增2个节目链接 -->
+                    <div class="program-item" 
+                    data-video-src="wdr13.mp4" 
+                    data-video-poster="你的封面图链接6.jpg">
+                   <span>威德尔的日常</span>
+                   <span>威德尔</span>
+                   <span>2025-11-05</span>
+               </div>
+               <div class="program-item" 
+                    data-video-src="wdr14.mp4" 
+                    data-video-poster="你的封面图链接7.jpg">
+                   <span>威德尔的极地繁衍</span>
+                   <span>威德尔</span>
+                   <span>2025-11-01</span>
+               </div>
+                    <div class="program-item" 
+                         data-video-src="njlx12.mp4" 
+                         data-video-poster="你的封面图链接5.jpg">
+                        <span>南极磷虾群</span>
+                        <span>磷虾</span>
+                        <span>2025-6-10</span>
+                    </div>
+                    <div class="program-item" 
+                         data-video-src="bjxl12.mp4" 
+                         data-video-poster="你的封面图链接5.jpg">
+                        <span>北极驯鹿冒险记</span>
+                        <span>北极驯鹿</span>
+                        <span>2025-7-22</span>
+                    </div>
+                    <div class="more-btn">
+                        <a href="aaa4.html" target="_blank">
+                            <button type="button">返回</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const hourlyWeather = [
+            {hour:8, weather:"雾", temp:9},
+            {hour:9, weather:"多云", temp:9},
+            {hour:10, weather:"多云", temp:12},
+            {hour:11, weather:"阴", temp:14},
+            {hour:12, weather:"阴", temp:15},
+            {hour:13, weather:"阴", temp:15},
+            {hour:14, weather:"阴", temp:15},
+            {hour:15, weather:"阴", temp:16},
+            {hour:16, weather:"阴", temp:16},
+            {hour:17, weather:"阴", temp:16},
+            {hour:18, weather:"阴", temp:15},
+            {hour:19, weather:"阴", temp:15},
+            {hour:20, weather:"阴", temp:15},
+            {hour:21, weather:"阴", temp:14},
+            {hour:22, weather:"阴", temp:14},
+            {hour:23, weather:"阴", temp:14}
+        ];
+        function updateRealTimeWeather() {
+            const now = new Date();
+            const currentHour = now.getHours();
+            const weatherElement = document.getElementById('realTimeWeather');
+            const currentWeather = hourlyWeather.find(item => item.hour === currentHour) || hourlyWeather.find(item => item.hour === 15);
+            weatherElement.textContent = `${currentWeather.weather} ${currentWeather.temp}℃`;
+        }
+        updateRealTimeWeather();
+        setInterval(updateRealTimeWeather, 3600000);
+        const weekDays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+        function formatRealDate() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const week = weekDays[now.getDay()];
+            return `${year}年${month}月${day}日 ${week}`;
+        }
+        function updateRealDate() {
+            const dateElement = document.getElementById('realDate');
+            dateElement.textContent = formatRealDate();
+        }
+        updateRealDate();
+        setInterval(updateRealDate, 86400000);
+        const carouselContent = document.getElementById('carouselContent');
+        const carouselLabel = document.getElementById('carouselLabel');
+        const labels = [
+            '北极 · 北极熊', 
+            '南极 · 帝企鹅', 
+            '南极 · 磷虾群', 
+            '北极 · 北极狐', 
+            '北极 · 竖琴海豹'
+        ];
+        let currentIndex = 0;
+        const itemCount = document.querySelectorAll('.carousel-item').length;
+        function switchCarousel(index) {
+            carouselContent.style.transform = `translateY(-${index * 100}%)`;
+            carouselLabel.textContent = labels[index];
+            currentIndex = index;
+        }
+        setInterval(() => {
+            const nextIndex = (currentIndex + 1) % itemCount;
+            switchCarousel(nextIndex);
+        }, 3000);
+        const video = document.getElementById('polarVideo');
+        const programItems = document.querySelectorAll('.program-item');
+        programItems.forEach(item => {
+            item.addEventListener('click', () => {
+                programItems.forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+                const videoSrc = item.dataset.videoSrc;
+                const videoPoster = item.dataset.videoPoster;
+                video.poster = videoPoster;
+                video.src = videoSrc;
+                video.load();
+                video.play();
+            });
+        });
+        video.addEventListener('ended', () => {
+            video.currentTime = 0;
+            video.play();
+        });
+    </script>
+</body>
+</html>
